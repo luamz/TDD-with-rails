@@ -1,6 +1,6 @@
 require 'calculator'
 
-describe Calculator, 'with simple operations' do
+RSpec.describe Calculator, 'with simple operations' do
     context '#sum' do
         it 'with positive numbers' do
             result = subject.sum(3,7)
@@ -15,6 +15,11 @@ describe Calculator, 'with simple operations' do
         it 'with integers' do
             result = subject.sum(-5,7)
             expect(result).to eq(2)
+        end
+    end
+    context '#division' do
+        it 'divided by zero' do
+            expect{subject.divide(3, 0)}.to raise_error(ZeroDivisionError, "divided by 0")
         end
     end
 end
