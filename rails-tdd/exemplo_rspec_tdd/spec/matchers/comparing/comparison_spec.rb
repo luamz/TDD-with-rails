@@ -16,9 +16,9 @@ describe 'Comparison Matchers' do
 
     end
 
-    it 'between inclusive' do
-        expect(2).to be_between(1,3).inclusive
-        expect(2).to be_between(2,3).inclusive
+    it 'between inclusive', :aggregate_failures do
+        expect(7).to be_between(1,3).inclusive
+        expect(8).to be_between(2,3).inclusive
 
     end
 
