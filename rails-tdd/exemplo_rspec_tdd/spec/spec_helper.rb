@@ -18,6 +18,24 @@ require_relative '../helpers/helper'
 
 RSpec.configure do |config|
 
+  # config.before(:suite) do
+  #   puts ">>>>>>>>>>>>>>>>>> Before all of the suite of tests"
+  # end
+
+  # config.after(:suite) do
+  #   puts ">>>>>>>>>>>>>>>>>> After all of the suite of tests"
+  # end
+
+  # config.before(:context) do
+  #   puts "-------------------------------------------------"
+  # end
+
+  # config.after(:context) do
+  #   puts "-------------------------------------------------"
+  # end
+
+  
+
   config.include Helper
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
