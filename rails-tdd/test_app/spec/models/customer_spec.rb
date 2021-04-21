@@ -4,6 +4,7 @@ RSpec.describe Customer, type: :model do
   it '#fullname' do
     attrs = attributes_for(:customer)
     customer = Customer.create(attrs)
+    puts customer.email
     expect(customer.full_name).to  starting_with("Mr./Ms. ")
   end
   
