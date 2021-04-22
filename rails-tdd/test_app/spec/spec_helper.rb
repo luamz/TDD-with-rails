@@ -1,5 +1,6 @@
 require 'webmock/rspec'
 require 'vcr'
+require 'json_matchers/rspec'
 
 # VCR
 VCR.configure do |config|

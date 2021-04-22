@@ -71,7 +71,12 @@ RSpec.describe 'Customers', type: :request do
 
         customers = Customer.first
         expect{delete "/customers/#{customers.id}.json", headers: headers}.to change(Customer,:count).by(-1)
-
+      end
+    end
+    context "JSON Schema" do
+      it 'Show' do
+        get '/customers/1.json'
+        expect(response).to match_response_schema("customer")
       end
     end
   end
