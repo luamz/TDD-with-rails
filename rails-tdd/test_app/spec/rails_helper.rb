@@ -34,11 +34,12 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
 
-  #Devise
+  # Devise
   config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include Warden::Test::Helpers
 
 
-  #Shoulda Matchers
+  # Shoulda Matchers
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       with.test_framework :rspec
@@ -46,10 +47,10 @@ RSpec.configure do |config|
     end
   end
 
-  #Time helper
+  # Time helper
   config.include ActiveSupport::Testing::TimeHelpers
 
-  #FactoryBot
+  # FactoryBot
   config.include FactoryBot::Syntax::Methods
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
