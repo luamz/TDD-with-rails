@@ -40,4 +40,85 @@ feature "Customers", type: :feature do
     expect(page).to have_content("can't be blank")
   end
 
+  scenario "Shows a client" do
+    customer = Customer.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      phone: Faker::PhoneNumber.phone_number,
+      smoker: ['Y,"N'].sample,
+      avatar: "#{Rails.root}/spec/fixtures/avatar.png"
+    )
+    visit(customer_path(customer.id))
+    expect(page).to have_content(customer.name)
+    expect(page).to have_content(customer.email)
+    expect(page).to have_content(customer.phone)
+
+  end
+
+  scenario "Indexes clients" do
+    customer1 = Customer.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      phone: Faker::PhoneNumber.phone_number,
+      smoker: ['Y,"N'].sample,
+      avatar: "#{Rails.root}/spec/fixtures/avatar.png"
+    )
+
+    customer2 = Customer.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      phone: Faker::PhoneNumber.phone_number,
+      smoker: ['Y,"N'].sample,
+      avatar: "#{Rails.root}/spec/fixtures/avatar.png"
+    )
+
+    visit(customers_path)
+    expect(page).to have_content(customer1.name).and have_content(customer2.name)
+    
+  end
+
+  scenario 'updates a client' do
+    customer = Customer.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      phone: Faker::PhoneNumber.phone_number,
+      smoker: ['Y,"N'].sample,
+      avatar: "#{Rails.root}/spec/fixtures/avatar.png"
+    )
+    new_name = Faker::Name.name
+    visit(edit_customer_path(customer.id))
+    fill_in('Name', with: new_name)
+    click_on('Update Client')
+    expect(page).to have_content('Client successfully updated')
+    expect(page).to have_content(new_name)
+  end
+
+  scenario 'link to show at index' do
+    customer1 = Customer.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      phone: Faker::PhoneNumber.phone_number,
+      smoker: ['Y,"N'].sample,
+      avatar: "#{Rails.root}/spec/fixtures/avatar.png"
+    )
+
+    visit(customers_path)
+    find(:xpath, '/html/body/table/tbody/tr[1]/td[2]/a').click
+    expect(page).to have_content("Showing Client")
+  end
+
+  scenario 'link to edit at index' do
+    customer1 = Customer.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      phone: Faker::PhoneNumber.phone_number,
+      smoker: ['Y,"N'].sample,
+      avatar: "#{Rails.root}/spec/fixtures/avatar.png"
+    )
+
+    visit(customers_path)
+    find(:xpath, '/html/body/table/tbody/tr[1]/td[3]/a').click
+    expect(page).to have_content("Editing Client")
+  end
+
 end
