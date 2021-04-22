@@ -34,4 +34,10 @@ feature "Customers", type: :feature do
     expect(Customer.last.name).to eq(customer_name)
   end
 
+  scenario 'Does not registrates new client' do
+    visit(new_customer_path)
+    click_on('Create Client')
+    expect(page).to have_content("can't be blank")
+  end
+
 end
