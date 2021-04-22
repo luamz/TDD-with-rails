@@ -28,6 +28,19 @@ RSpec.describe CustomersController, type: :controller do
         @customer = create(:customer)
     end
 
+    it 'route' do
+        is_expected.to route(:get,'/customers').to(action: :index)
+    end
+
+
+    it 'content_type' do
+        customer_params = attributes_for(:customer)
+        sign_in @member
+        get :show, format: :json, params:{id: @customer.id}
+        post :create, params:{customer: customer_params}
+        expect(response.content_type).to eq('application/json')
+    end
+
     it 'flash_notice works' do
         customer_params = attributes_for(:customer)
         sign_in @member
@@ -35,10 +48,17 @@ RSpec.describe CustomersController, type: :controller do
         expect(flash[:notice]).to match(/successfully created/)
     end
 
-    it 'adding_customer_with_valid_attributes' do
+    it 'trying to add customer with valid attributes' do
         customer_params = attributes_for(:customer)
         sign_in @member
         expect{post :create, params:{customer: customer_params}}.to change(Customer, :count).by(1)
+    end
+
+    it 'trying to add customer with invalid attributes' do
+        customer_params = attributes_for(:customer, address:nil)
+        sign_in @member
+        expect{post :create, params:{customer: customer_params}}
+        .not_to change(Customer, :count)
     end
 
     it 'responds a 200 response' do
